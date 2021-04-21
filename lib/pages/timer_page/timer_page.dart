@@ -44,18 +44,19 @@ class _TimerPageState extends State<TimerPage> {
 class TimerTextWidget extends StatelessWidget {
   const TimerTextWidget({Key? key}) : super(key: key);
   @override
-Widget build(BuildContext context) {
-  final stateManager = getIt<TimerPageManager>();
-  return ValueListenableBuilder<String>(
-    valueListenable: stateManager.timeLeftNotifier,
-    builder: (context, timeLeft, child) {
-      return Text(
-        timeLeft,
-        style: Theme.of(context).textTheme.headline2,
-      );
-    },
-  );
-}
+  Widget build(BuildContext context) {
+    final stateManager = getIt<TimerPageManager>();
+    return ValueListenableBuilder<String>(
+      valueListenable: stateManager.timeLeftNotifier,
+      builder: (context, timeLeft, child) {
+        print('building time left state: $timeLeft');
+        return Text(
+          timeLeft,
+          style: Theme.of(context).textTheme.headline2,
+        );
+      },
+    );
+  }
 }
 
 class ButtonsContainer extends StatelessWidget {
@@ -63,33 +64,34 @@ class ButtonsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('building ButtonsContainer');
     final stateManager = getIt<TimerPageManager>();
     return ValueListenableBuilder<ButtonState>(
-        valueListenable: stateManager.buttonNotifier,
-        builder: (context, buttonState, child) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (buttonState == ButtonState.initial) ...[
-                StartButton(),
-              ],
-              if (buttonState == ButtonState.started) ...[
-                PauseButton(),
-                SizedBox(width: 20),
-                ResetButton(),
-              ],
-              if (buttonState == ButtonState.paused) ...[
-                StartButton(),
-                SizedBox(width: 20),
-                ResetButton(),
-              ],
-              if (buttonState == ButtonState.finished) ...[
-                ResetButton(),
-              ],
+      valueListenable: stateManager.buttonNotifier,
+      builder: (context, buttonState, child) {
+        print('building button state: $buttonState');
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (buttonState == ButtonState.initial) ...[
+              StartButton(),
             ],
-          );
-        });
+            if (buttonState == ButtonState.started) ...[
+              PauseButton(),
+              SizedBox(width: 20),
+              ResetButton(),
+            ],
+            if (buttonState == ButtonState.paused) ...[
+              StartButton(),
+              SizedBox(width: 20),
+              ResetButton(),
+            ],
+            if (buttonState == ButtonState.finished) ...[
+              ResetButton(),
+            ],
+          ],
+        );
+      },
+    );
   }
 }
 

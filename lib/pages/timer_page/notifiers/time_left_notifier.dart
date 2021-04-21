@@ -74,6 +74,7 @@ class TimeLeftNotifier extends ValueNotifier<String> {
   }
 }
 
+// https://github.com/felangel/bloc/blob/master/examples/flutter_timer/lib/ticker.dart
 class Ticker {
   Stream<int> tick({required int ticks}) {
     return Stream.periodic(
