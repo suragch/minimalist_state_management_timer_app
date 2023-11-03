@@ -3,8 +3,10 @@ import 'package:timer_app/services/service_locator.dart';
 import 'package:timer_app/pages/timer_page/timer_page_logic.dart';
 
 class TimerPage extends StatefulWidget {
+  const TimerPage({super.key});
+
   @override
-  _TimerPageState createState() => _TimerPageState();
+  State<TimerPage> createState() => _TimerPageState();
 }
 
 class _TimerPageState extends State<TimerPage> {
@@ -24,10 +26,10 @@ class _TimerPageState extends State<TimerPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('building MyHomePage');
+    debugPrint('building MyHomePage');
     return Scaffold(
-      appBar: AppBar(title: Text('My Timer App')),
-      body: Center(
+      appBar: AppBar(title: const Text('My Timer App')),
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -42,17 +44,17 @@ class _TimerPageState extends State<TimerPage> {
 }
 
 class TimerTextWidget extends StatelessWidget {
-  const TimerTextWidget({Key? key}) : super(key: key);
+  const TimerTextWidget({super.key});
   @override
   Widget build(BuildContext context) {
     final stateManager = getIt<TimerPageManager>();
     return ValueListenableBuilder<String>(
       valueListenable: stateManager.timeLeftNotifier,
       builder: (context, timeLeft, child) {
-        print('building time left state: $timeLeft');
+        debugPrint('building time left state: $timeLeft');
         return Text(
           timeLeft,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.displayMedium,
         );
       },
     );
@@ -60,7 +62,7 @@ class TimerTextWidget extends StatelessWidget {
 }
 
 class ButtonsContainer extends StatelessWidget {
-  const ButtonsContainer({Key? key}) : super(key: key);
+  const ButtonsContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,25 +70,25 @@ class ButtonsContainer extends StatelessWidget {
     return ValueListenableBuilder<ButtonState>(
       valueListenable: stateManager.buttonNotifier,
       builder: (context, buttonState, child) {
-        print('building button state: $buttonState');
+        debugPrint('building button state: $buttonState');
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (buttonState == ButtonState.initial) ...[
-              StartButton(),
+              const StartButton(),
             ],
             if (buttonState == ButtonState.started) ...[
-              PauseButton(),
-              SizedBox(width: 20),
-              ResetButton(),
+              const PauseButton(),
+              const SizedBox(width: 20),
+              const ResetButton(),
             ],
             if (buttonState == ButtonState.paused) ...[
-              StartButton(),
-              SizedBox(width: 20),
-              ResetButton(),
+              const StartButton(),
+              const SizedBox(width: 20),
+              const ResetButton(),
             ],
             if (buttonState == ButtonState.finished) ...[
-              ResetButton(),
+              const ResetButton(),
             ],
           ],
         );
@@ -96,7 +98,7 @@ class ButtonsContainer extends StatelessWidget {
 }
 
 class StartButton extends StatelessWidget {
-  const StartButton({Key? key}) : super(key: key);
+  const StartButton({super.key});
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -104,13 +106,13 @@ class StartButton extends StatelessWidget {
         final stateManager = getIt<TimerPageManager>();
         stateManager.start();
       },
-      child: Icon(Icons.play_arrow),
+      child: const Icon(Icons.play_arrow),
     );
   }
 }
 
 class PauseButton extends StatelessWidget {
-  const PauseButton({Key? key}) : super(key: key);
+  const PauseButton({super.key});
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -118,13 +120,13 @@ class PauseButton extends StatelessWidget {
         final stateManager = getIt<TimerPageManager>();
         stateManager.pause();
       },
-      child: Icon(Icons.pause),
+      child: const Icon(Icons.pause),
     );
   }
 }
 
 class ResetButton extends StatelessWidget {
-  const ResetButton({Key? key}) : super(key: key);
+  const ResetButton({super.key});
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -132,7 +134,7 @@ class ResetButton extends StatelessWidget {
         final stateManager = getIt<TimerPageManager>();
         stateManager.reset();
       },
-      child: Icon(Icons.replay),
+      child: const Icon(Icons.replay),
     );
   }
 }
